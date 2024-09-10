@@ -11,12 +11,27 @@ os.makedirs(log_directory, exist_ok=True)
 log_file = os.path.join(log_directory, 'ImageFetcher.log')
 logging.basicConfig(filename=log_file,encoding='utf-8',level=logging.INFO, filemode = 'w', format='%(levelname)s: %(message)s')
 
-def get_images_from_pixabay(API_key: str, keyword: str, num_images: Optional[int] = None) -> None:
+def get_images_from_pixabay(API_key: str, keyword: str, num_images: Optional[int] = None, lang: Optional[str] = 'en', image_type: Optional[str] = 'all',
+                            editors_choice: Optional[bool] = False, image_size: Optional[str] = 'webformat') -> None:
+    
+    ''' 
+    Full Pixabay API documentation: https://pixabay.com/api/docs/
+
+    ----------------
+
+    image_type: str, optional
+        Filter results by image type. Accepted values: 'all', 'photo", 'illustration', 'vector' 
+
+    image_size : str, optional 
+        Size of the image to download ('preview', 'webformat', 'largeImage'). Default is 'webformat'
+
+    '''
+    
     # init pixabay API
     px = pixabay.core(API_key)
 
     # search for keyword
-    media = px.query(keyword)
+    media = px.query(keyword, lang, image_type, editors_choice)
 
     # amount of total hits
     hits = len(media)
@@ -31,4 +46,4 @@ def get_images_from_pixabay(API_key: str, keyword: str, num_images: Optional[int
     # Download images
     for n in range(num_images):
         image_path = os.path.join('ImageFetcher', f"image_{keyword}_{n}.jpg")
-        media[n].download(image_path, "largeImage")
+        media[n].download(image_path, image_size)
