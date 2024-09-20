@@ -24,8 +24,9 @@ def get_images_from_pixabay(API_key: str, keyword: str, num_images: Optional[int
     
     ----------------
     Full Pixabay API documentation: https://pixabay.com/api/docs/
+    
     ----------------
-    Python wrapper documentation: https://github.com/Lukas0025/python-pixabay/tree/main
+    Python pixabay wrapper documentation: https://github.com/Lukas0025/python-pixabay/tree/main
 
     '''
     
