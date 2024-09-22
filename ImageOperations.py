@@ -10,8 +10,10 @@ def rotate_and_save_image(input_image: str):
     aspect_ratio = width / height
     
     if aspect_ratio > 1: 
-        rotate_image = image.rotate(90, expand=True)
-        rotate_image.save(input_image)
+        rotated_image = image.rotate(90, expand=True)
+        if rotated_image.mode != 'RGB':  
+            rotated_image = rotated_image.convert('RGB')
+        rotated_image.save(input_image)
 
 def convert_to_greyscale(input_filename, output_filename):
     img = Image.open(input_filename).convert('L')
